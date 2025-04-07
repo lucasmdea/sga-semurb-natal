@@ -16,11 +16,13 @@ utilize o comando ip address para identificar o ip do seu servidor e o digite em
 
 ## Alterações no Banco de Dados
 ```mysql
-ALTER TABLE atemdimentos MODIFY COLUMN sigla_senha VARCHAR(4) NOT NULL;
-ALTER TABLE historico_atendimentos MODIFY COLUMN sigla_senha VARCHAR(4) NOT NULL;
-ALTER TABLE painel_senha MODIFY COLUMN sig_senha VARCHAR(4) NOT NULL;
-ALTER TABLE uni_serv MODIFY COLUMN sigla VARCHAR(4) NOT NULL;
-ALTER TABLE view_historico_atendimentos MODIFY COLUMN sigla_senha VARCHAR(4) NOT NULL;
+ALTER TABLE atendimentos CHANGE sigla_senha sigla_senha VARCHAR(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+ALTER TABLE painel_senha CHANGE sig_senha sig_senha VARCHAR(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+ALTER TABLE uni_serv CHANGE sigla sigla VARCHAR(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+ALTER TABLE historico_atendimentos CHANGE sigla_senha sigla_senha VARCHAR(3) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
 ```
 ## Alterações nos arquivos
 
@@ -42,28 +44,31 @@ public function setSigla($sigla)
     }
 }
 ```
+```terminal
 sudo nano -l /var/www/html/novosga/modules/sga/unidade/views/index.html.twig
-
+```
 Linha 42 e 43
 
 size="3"
 maxlength="4"
 
+```terminal
 sudo nano -l /var/www/html/novosga/modules/sga/unidade/public/css/style.cs
-
+```
 Linha 9
 
 #servicos td.sigla {
 width: 90px;
 }
-
+```terminal
 sudo sed -i '215s|5|6|i' /var/www/html/novosga/modules/sga/triagem/views/index.html.twig
 sudo sed -i '302s|5|6|i' /var/www/html/novosga/modules/sga/atendimento/views/index.html.twig
 sudo sed -i '33s|5|6|i' /var/www/html/novosga/modules/sga/monitor/views/index.html.twig
-
+```
 Limpar o cache
-rm -r /var/www/html/novosga/var/cache/*
-
+```termianal
+sudo rm -r /var/www/html/novosga/var/cache/*
+```
 # Instalação da impressora termica
 
 extraia o arquivo driver-elgin-i7-i8-e-i9-windows-e-linux.zip
