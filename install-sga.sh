@@ -19,7 +19,7 @@ sudo mysql -e "CREATE USER 'sgauser'@'localhost' IDENTIFIED BY 'sua_senha';"
 sudo mysql -e "GRANT ALL PRIVILEGES ON sgadb.* TO 'sgauser'@'localhost';"
 
 # Configure Apache
-sudo sed -i 's|/var/www/html|/var/www/html/novosga/public|g' /etc/apache2/sites-available/000-default.conf
+sudo sed -i 's|/var/www/html|/var/www/html|g' /etc/apache2/sites-available/000-default.conf
 sudo sed -i 's|AllowOverride None|AllowOverride All|g' /etc/apache2/apache2.conf
 echo 'date.timezone = America/Sao_Paulo' | sudo tee /etc/php/5.6/apache2/conf.d/datetimezone.ini
 sudo a2enmod rewrite
