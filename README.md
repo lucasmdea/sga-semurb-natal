@@ -4,24 +4,30 @@ Tutorial de instalação do Novo SGA, na Secretaria Municipal de Meio Ambiente e
 
 Execute ou siga o passo a passo do install-sga.sh
 
-# Tela de seleção inicial
+## Tela de seleção inicial
 
-Painel de Atendimento, altere o index.php no diretorio /var/www/html, pelo arquivo anexado
+Painel de Atendimento, altere o index.php no diretorio /var/www/html, pelo arquivo index.php anexado
 
 Baixe o arquivo painel.zip, com o painel atualizado
 
-# Alterações no Banco de Dados
+## Instando o Banco de Dados no NOVO SGA
 
+utilize o comando ip address para identificar o ip do seu servidor e o digite em um navegador, ou se preferir utilize o ip 127.0.0.1
+
+## Alterações no Banco de Dados
+```mysql
 ALTER TABLE atemdimentos MODIFY COLUMN sigla_senha VARCHAR(4) NOT NULL;
 ALTER TABLE historico_atendimentos MODIFY COLUMN sigla_senha VARCHAR(4) NOT NULL;
 ALTER TABLE painel_senha MODIFY COLUMN sig_senha VARCHAR(4) NOT NULL;
 ALTER TABLE uni_serv MODIFY COLUMN sigla VARCHAR(4) NOT NULL;
 ALTER TABLE view_historico_atendimentos MODIFY COLUMN sigla_senha VARCHAR(4) NOT NULL;
+```
+## Alterações nos arquivos
 
-# Alterações nos arquivos
 
 sudo nano -l /var/www/html/novosga/src/Novosga/Model/Util/Senha.php
 
+```nano
 /**
  * Define a sigla da senha.
  *
@@ -35,7 +41,7 @@ public function setSigla($sigla)
         throw new \Exception(_('A sigla da senha deve ser um char'));
     }
 }
-
+```
 sudo nano -l /var/www/html/novosga/modules/sga/unidade/views/index.html.twig
 
 Linha 42 e 43
